@@ -1,0 +1,5 @@
+
+LIDE-C Inner Product Actor Example
+Maryland DSPCAD Research Group 
+Version: 0.1
+Revision: 10/28/2015
