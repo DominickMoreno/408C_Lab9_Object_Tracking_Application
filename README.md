@@ -17,4 +17,7 @@ User instructions:
 'git commit -m "commit message"'
 	*To commit changes to LOCAL repository
 
+'git push origin {dominick/jacob/kimberly}-branch"
+	*When you're ready to have your changes merged into master
+
 	This process will not merge changes you've committed to your local repository; they will still need to be merged into master. We will merge all of our changes together in order to resolve conflicts.
