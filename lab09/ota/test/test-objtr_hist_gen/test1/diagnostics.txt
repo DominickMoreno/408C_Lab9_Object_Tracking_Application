@@ -1,0 +1,43 @@
+creating new hist gen object
+input_source visit complete.
+checking fifo population 1
+in OBJTR_HIST_GEN_MODE_STORE_IMAGE 1
+input_source visit complete.
+checking fifo population 1
+in OBJTR_HIST_GEN_MODE_STORE_IMAGE 2
+input_source visit complete.
+checking fifo population 1
+in OBJTR_HIST_GEN_MODE_STORE_IMAGE 3
+input_source visit complete.
+checking fifo population 1
+in OBJTR_HIST_GEN_MODE_STORE_IMAGE 4
+in invoke
+objtr_hist_gen visit complete.
+input_source visit complete.
+checking fifo population 2
+in OBJTR_HIST_GEN_MODE_PROCESS
+in invoke
+putting 200 in temp
+putting 150 in temp
+putting 90 in temp
+putting 500 in temp
+height: 2, width: 2, values:200, 150, 90, 500, 
+checking 200, 0, 0, 0
+checking 200, 0, 0, 2
+200 is between 200 and 400, adding to bin.
+checking 150, 0, 1, 0
+150 is between 0 and 199, adding to bin.
+checking 150, 1, 0, 0
+90 is between 0 and 199, adding to bin.
+checking 90, 1, 1, 0
+checking 90, 1, 1, 2
+Value 90 out of range.
+writing 2 to out
+writing 1 to out
+objtr_hist_gen visit complete.
+sink visit complete.
+checking fifo population 1
+in OBJTR_HIST_GEN_MODE_STORE_IMAGE 0
+sink visit complete.
+checking fifo population 1
+in OBJTR_HIST_GEN_MODE_STORE_IMAGE 0

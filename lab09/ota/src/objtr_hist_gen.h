@@ -70,7 +70,7 @@ first vector, the specified input FIFO pointer y for the second vector, and the
 specified output FIFO pointer.
 *****************************************************************************/
 objtr_hist_gen_context_type *objtr_hist_gen_new(
-        lide_c_fifo_pointer image, int *bins, int NUM_BINS, int width,
+        lide_c_fifo_pointer input, int *bins, int NUM_BINS, int width,
         int height, lide_c_fifo_pointer out);
 
 /*****************************************************************************

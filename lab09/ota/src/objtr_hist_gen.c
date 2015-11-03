@@ -71,8 +71,8 @@ objtr_hist_gen_context_type *objtr_hist_gen_new(
         int height,
         lide_c_fifo_pointer out) { 
 
-    objtr_hist_gen_context_type *context = NULL;
 
+    objtr_hist_gen_context_type *context = NULL;
     context = lide_c_util_malloc(
             sizeof(objtr_hist_gen_context_type));
     context->mode = 
@@ -81,68 +81,104 @@ objtr_hist_gen_context_type *objtr_hist_gen_new(
             objtr_hist_gen_enable;
     context->invoke = (lide_c_actor_invoke_function_type)
             objtr_hist_gen_invoke;
+    context->input = input;
     context->bins = bins;
     context->num_bins = num_bins;
     context->width = width;
     context->height = height;
-    context->image = NULL;
+    context->image = lide_c_util_malloc(
+            sizeof(int) * width * height);
     context->out = out;
+
     return context;
 }
 
 boolean objtr_hist_gen_enable(
         objtr_hist_gen_context_type *context) {
     boolean result = FALSE;
-
     switch (context->mode) {
-    case OBJTR_HIST_GEN_MODE_STORE_IMAGE:
-        result = lide_c_fifo_population(context->input) == ((context->width)*(context->height));
-        break;
-    case OBJTR_HIST_GEN_MODE_PROCESS:
-        result = (lide_c_fifo_population(context->out) <
-                lide_c_fifo_capacity(context->out));
-        break;
-    default:
-            result = FALSE;
+        case OBJTR_HIST_GEN_MODE_STORE_IMAGE:
+            result = lide_c_fifo_population(context->input) == ((context->width)*(context->height));
             break;
+        case OBJTR_HIST_GEN_MODE_PROCESS:
+
+            result = (lide_c_fifo_population(context->out) <
+                    lide_c_fifo_capacity(context->out));
+            break;
+        default:
+                result = FALSE;
+                break;
     }
     return result;
 }
 
 void objtr_hist_gen_invoke(objtr_hist_gen_context_type *context) {
-    int i = 0;
-    int num_pixels = context->width * context->height;
-    int *temp = context->image;
+    int i, j, k, upper_bound, lower_bound = 0;
+    int m = context->num_bins;
+    int width = context->width;
+    int height = context->height;
+    int num_pixels = width * height;
+    int *image;
+    int *out;
+    printf("in invoke\n");
     switch (context->mode) {
-    case OBJTR_HIST_GEN_MODE_STORE_IMAGE:
-        for (i = 0; i < num_pixels; i++) {  
-            lide_c_fifo_read(context->input, &temp);
-            temp++;
-        }
-        
+        case OBJTR_HIST_GEN_MODE_STORE_IMAGE:
 
-        /* Disregard this token if it results in an invalid length. 
-         if (context->length <= 0) {
-            context->mode = LIDE_C_INNER_PROD_MODE_STORE_LENGTH;
-             return;
-         } */
-        context->mode = OBJTR_HIST_GEN_MODE_PROCESS;
-        break;
+            /* Disregard this token if it results in an invalid length. */
+             if ((context->width <= 0) || (context->height <= 0)) {
+                context->mode = OBJTR_HIST_GEN_MODE_STORE_IMAGE;
+                 return;
+             } 
+            context->mode = OBJTR_HIST_GEN_MODE_PROCESS;
+            break;
 
-    case OBJTR_HIST_GEN_MODE_PROCESS:
-        for (i = 0; i < num_pixels; i++) {
-            lide_c_fifo_write(context->out, context->image[i]);
-        }
-        context->mode = OBJTR_HIST_GEN_MODE_STORE_IMAGE;
-        break; 
-    default:
-        context->mode = OBJTR_HIST_GEN_MODE_STORE_IMAGE;
-        break;
+        case OBJTR_HIST_GEN_MODE_PROCESS:
+            for (i = 0; i < num_pixels; i++) {
+                lide_c_fifo_read(context->input, &(context->image[i]));
+            }
+
+            out = lide_c_util_malloc(sizeof(int) * context->num_bins);
+            image = context->image;
+
+
+            for(i = 0; i < context->height; i++) {
+                for(j = 0; j < context->width; j++) {
+                    for(k = 0; k < 2*m; k += 2) {
+                       
+                        lower_bound = context->bins[k];
+                        upper_bound = context->bins[k + 1];
+
+                        if(((k == 0) && (image[i*width + j] < lower_bound)) ||
+                           ((k == ((2*m)-2)) && (image[i*width + j] > upper_bound))) {
+                            printf("Value %d out of range.\n", image[i + j]);
+                            break;
+                        }
+
+                        if((image[i*width + j] >= lower_bound) &&
+                           (image[i*width + j] <= upper_bound)) {
+                            printf("%d is between %d and %d, adding to bin.\n", image[i*width + j], lower_bound, upper_bound);
+                            out[(k/2)]++;
+                            break;
+                        }
+                    }
+                }   
+            }
+
+            for (i = 0; i < m; i++) {
+                lide_c_fifo_write(context->out, &(out[i]));
+            }
+            free(out);
+            context->mode = OBJTR_HIST_GEN_MODE_STORE_IMAGE;
+            break; 
+        default:
+            context->mode = OBJTR_HIST_GEN_MODE_STORE_IMAGE;
+            break;
     } 
     return;
 }
 
 void objtr_hist_gen_terminate(
         objtr_hist_gen_context_type *context) {
+    free(context->image);
     free(context);
 }
