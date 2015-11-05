@@ -128,15 +128,17 @@ void lide_c_hist_find_opt_invoke(
 
 	if(context->mode == lide_c_hist_find_opt_MODE_PROCESS) {
 		int index, least_val, least_index;
-		int *array_of_vals;
+		int *array_of_vals =
+			lide_c_util_malloc(sizeof(int) * context->block_size);
 
 		/* read the input FIFO */
 		for(index = 0; index < context->block_size; index++) {
+			array_of_vals[index] = -1;
 			lide_c_fifo_read(context->input, &array_of_vals[index]);
 		} 
 
 		/* determine the index of the smallest value */
-		least_val = 4294967295;
+		least_val = 2147483647;
 		least_index = -1;
 		for(index = 0; index < context->block_size; index++) {
 			if(array_of_vals[index] < least_val) {
@@ -149,6 +151,8 @@ void lide_c_hist_find_opt_invoke(
 
 		/* write the least value index to the output FIFO */
 		lide_c_fifo_write(context->output, &(context->output_index));
+
+		free(array_of_vals);
 
 	}
 
