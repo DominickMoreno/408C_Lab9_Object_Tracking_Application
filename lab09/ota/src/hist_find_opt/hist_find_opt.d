@@ -1,6 +1,6 @@
-objtr_hist_gen.o objtr_hist_gen.d : objtr_hist_gen.c \
+hist_find_opt.o hist_find_opt.d : hist_find_opt.c \
  /dept/enee/software/dspcad/idice/idice-set/packages/lide1.0/lide/lang/c/src/gems/edges/basic/lide_c_fifo.h \
- objtr_hist_gen.h \
+ hist_find_opt.h \
  /dept/enee/software/dspcad/idice/idice-set/packages/lide1.0/lide/lang/c/src/gems/actors/common/lide_c_actor.h \
  /dept/enee/software/dspcad/idice/idice-set/packages/lide1.0/lide/lang/c/src/gems/actors/common/lide_c_basic.h \
  /dept/enee/software/dspcad/idice/idice-set/packages/lide1.0/lide/lang/c/src/gems/actors/common/lide_c_actor_context_type_common.h \
