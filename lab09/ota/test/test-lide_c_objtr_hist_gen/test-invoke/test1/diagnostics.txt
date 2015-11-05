@@ -1,0 +1,15 @@
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+in invoke
+lide_c_objtr_hist_gen visit complete.
+input_source visit complete.
+in invoke
+200 is between 200 and 400, adding to bin.
+150 is between 0 and 199, adding to bin.
+90 is between 0 and 199, adding to bin.
+Value 90 out of range.
+lide_c_objtr_hist_gen visit complete.
+sink visit complete.
+sink visit complete.

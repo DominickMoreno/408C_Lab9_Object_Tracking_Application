@@ -1,0 +1,3 @@
+Test02
+
+Tests the enable function on the hist gen when the fifo does not have enough data.
