@@ -31,14 +31,14 @@ ENHANCEMENTS, OR MODIFICATIONS.
 #include "lide_c_fifo.h"
 #include "lide_c_file_source.h"
 #include "lide_c_file_sink.h"
-#include "objtr_hist_gen.h"
+#include "lide_c_objtr_hist_gen.h"
 #include "lide_c_util.h"
 
 //#define BUFFER_CAPACITY 1024
 
 /* An enumeration of the actors in this application. */
 #define ACTOR_INPUTSOURCE 0
-#define ACTOR_OBJTR_HIST_GEN 1
+#define ACTOR_lide_c_objtr_hist_gen 1
 #define ACTOR_SINK 2
 
 /* The total number of actors in the application. */
@@ -69,11 +69,11 @@ int main(int argc, char **argv) {
     int buffer_capacity = 1024;
     
     /* actor descriptors (for diagnostic output) */
-    char *descriptors[ACTOR_COUNT] = {"input_source", "objtr_hist_gen", "sink"};
+    char *descriptors[ACTOR_COUNT] = {"input_source", "lide_c_objtr_hist_gen", "sink"};
 
     /* Check program usage. */
     if (argc != arg_count) {
-        fprintf(stderr, "objtr_hist_gen_driver.exe error: arg count (argc = %d)", argc);
+        fprintf(stderr, "lide_c_objtr_hist_gen_driver.exe error: arg count (argc = %d)", argc);
         exit(1);
     }   
 
@@ -92,8 +92,8 @@ int main(int argc, char **argv) {
     actors[ACTOR_INPUTSOURCE] = (lide_c_actor_context_type
             *)(lide_c_file_source_new(input_file, fifo1));
 
-    actors[ACTOR_OBJTR_HIST_GEN] = (lide_c_actor_context_type
-            *)(objtr_hist_gen_new(fifo1, bins, NUM_BINS, WIDTH, HEIGHT, fifo2));
+    actors[ACTOR_lide_c_objtr_hist_gen] = (lide_c_actor_context_type
+            *)(lide_c_objtr_hist_gen_new(fifo1, bins, NUM_BINS, WIDTH, HEIGHT, fifo2));
 
     actors[ACTOR_SINK] = (lide_c_actor_context_type *)
             (lide_c_file_sink_new(out_file, fifo2));

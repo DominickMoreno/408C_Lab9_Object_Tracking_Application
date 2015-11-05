@@ -28,5 +28,5 @@
 # @ddblock_end copyright 
 ################################################################################
 
-../util/objtr_hist_gen_driver.exe input.txt out.txt > diagnostics.txt
+../util/lide_c_objtr_hist_gen_driver.exe input.txt out.txt > diagnostics.txt
 cat out.txt

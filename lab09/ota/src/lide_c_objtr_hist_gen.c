@@ -30,14 +30,14 @@ ENHANCEMENTS, OR MODIFICATIONS.
 #include <stdlib.h>
 
 #include "lide_c_fifo.h"
-#include "objtr_hist_gen.h"
+#include "lide_c_objtr_hist_gen.h"
 #include "lide_c_util.h"
 
 /*******************************************************************************
 INNER PRODUCT STRUCTURE DEFINITION
 *******************************************************************************/
 
-struct _objtr_hist_gen_context_struct { 
+struct _lide_c_objtr_hist_gen_context_struct { 
 #include "lide_c_actor_context_type_common.h"
 
     /* Histogram variables. */
@@ -63,7 +63,7 @@ IMPLEMENTATIONS OF INTERFACE FUNCTIONS.
 line breaks so that it can be cut and pasted more conveniently into 
 presentation slides. 
 */
-objtr_hist_gen_context_type *objtr_hist_gen_new(
+lide_c_objtr_hist_gen_context_type *lide_c_objtr_hist_gen_new(
         lide_c_fifo_pointer input, 
         int *bins, 
         int num_bins,
@@ -72,15 +72,15 @@ objtr_hist_gen_context_type *objtr_hist_gen_new(
         lide_c_fifo_pointer out) { 
 
 
-    objtr_hist_gen_context_type *context = NULL;
+    lide_c_objtr_hist_gen_context_type *context = NULL;
     context = lide_c_util_malloc(
-            sizeof(objtr_hist_gen_context_type));
+            sizeof(lide_c_objtr_hist_gen_context_type));
     context->mode = 
-            OBJTR_HIST_GEN_MODE_STORE_IMAGE;
+            lide_c_objtr_hist_gen_MODE_STORE_IMAGE;
     context->enable = (lide_c_actor_enable_function_type)
-            objtr_hist_gen_enable;
+            lide_c_objtr_hist_gen_enable;
     context->invoke = (lide_c_actor_invoke_function_type)
-            objtr_hist_gen_invoke;
+            lide_c_objtr_hist_gen_invoke;
     context->input = input;
     context->bins = bins;
     context->num_bins = num_bins;
@@ -93,14 +93,14 @@ objtr_hist_gen_context_type *objtr_hist_gen_new(
     return context;
 }
 
-boolean objtr_hist_gen_enable(
-        objtr_hist_gen_context_type *context) {
+boolean lide_c_objtr_hist_gen_enable(
+        lide_c_objtr_hist_gen_context_type *context) {
     boolean result = FALSE;
     switch (context->mode) {
-        case OBJTR_HIST_GEN_MODE_STORE_IMAGE:
+        case lide_c_objtr_hist_gen_MODE_STORE_IMAGE:
             result = lide_c_fifo_population(context->input) == ((context->width)*(context->height));
             break;
-        case OBJTR_HIST_GEN_MODE_PROCESS:
+        case lide_c_objtr_hist_gen_MODE_PROCESS:
 
             result = (lide_c_fifo_population(context->out) <
                     lide_c_fifo_capacity(context->out));
@@ -112,7 +112,7 @@ boolean objtr_hist_gen_enable(
     return result;
 }
 
-void objtr_hist_gen_invoke(objtr_hist_gen_context_type *context) {
+void lide_c_objtr_hist_gen_invoke(lide_c_objtr_hist_gen_context_type *context) {
     int i, j, k, upper_bound, lower_bound = 0;
     int m = context->num_bins;
     int width = context->width;
@@ -122,17 +122,17 @@ void objtr_hist_gen_invoke(objtr_hist_gen_context_type *context) {
     int *out;
     printf("in invoke\n");
     switch (context->mode) {
-        case OBJTR_HIST_GEN_MODE_STORE_IMAGE:
+        case lide_c_objtr_hist_gen_MODE_STORE_IMAGE:
 
             /* Disregard this token if it results in an invalid length. */
              if ((context->width <= 0) || (context->height <= 0)) {
-                context->mode = OBJTR_HIST_GEN_MODE_STORE_IMAGE;
+                context->mode = lide_c_objtr_hist_gen_MODE_STORE_IMAGE;
                  return;
              } 
-            context->mode = OBJTR_HIST_GEN_MODE_PROCESS;
+            context->mode = lide_c_objtr_hist_gen_MODE_PROCESS;
             break;
 
-        case OBJTR_HIST_GEN_MODE_PROCESS:
+        case lide_c_objtr_hist_gen_MODE_PROCESS:
             for (i = 0; i < num_pixels; i++) {
                 lide_c_fifo_read(context->input, &(context->image[i]));
             }
@@ -168,17 +168,17 @@ void objtr_hist_gen_invoke(objtr_hist_gen_context_type *context) {
                 lide_c_fifo_write(context->out, &(out[i]));
             }
             free(out);
-            context->mode = OBJTR_HIST_GEN_MODE_STORE_IMAGE;
+            context->mode = lide_c_objtr_hist_gen_MODE_STORE_IMAGE;
             break; 
         default:
-            context->mode = OBJTR_HIST_GEN_MODE_STORE_IMAGE;
+            context->mode = lide_c_objtr_hist_gen_MODE_STORE_IMAGE;
             break;
     } 
     return;
 }
 
-void objtr_hist_gen_terminate(
-        objtr_hist_gen_context_type *context) {
+void lide_c_objtr_hist_gen_terminate(
+        lide_c_objtr_hist_gen_context_type *context) {
     free(context->image);
     free(context);
 }

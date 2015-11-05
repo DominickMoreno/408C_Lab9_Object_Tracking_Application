@@ -1,5 +1,5 @@
-#ifndef _objtr_hist_gen_h
-#define _objtr_hist_gen_h
+#ifndef _lide_c_objtr_hist_gen_h
+#define _lide_c_objtr_hist_gen_h
 
 /*******************************************************************************
 @ddblock_begin copyright
@@ -46,46 +46,46 @@ sets the STORE_LENGTH mode as the next mode.
 *******************************************************************************/
 
 /* Actor modes */
-#define OBJTR_HIST_GEN_MODE_STORE_IMAGE   1
-#define OBJTR_HIST_GEN_MODE_PROCESS       2 
+#define lide_c_objtr_hist_gen_MODE_STORE_IMAGE   1
+#define lide_c_objtr_hist_gen_MODE_PROCESS       2 
 
 /*******************************************************************************
 TYPE DEFINITIONS
 *******************************************************************************/
 
 /* Structure and pointer types associated with inner product objects. */
-struct _objtr_hist_gen_context_struct;
-typedef struct _objtr_hist_gen_context_struct
-        objtr_hist_gen_context_type;
+struct _lide_c_objtr_hist_gen_context_struct;
+typedef struct _lide_c_objtr_hist_gen_context_struct
+        lide_c_objtr_hist_gen_context_type;
 
 /*******************************************************************************
 INTERFACE FUNCTIONS
 *******************************************************************************/
 
 /*****************************************************************************
-Construct function of the objtr_hist_gen actor. Create a new
-objtr_hist_gen actor with the specified input FIFO pointer m for the
+Construct function of the lide_c_objtr_hist_gen actor. Create a new
+lide_c_objtr_hist_gen actor with the specified input FIFO pointer m for the
 configuration of vector length, the specified input FIFO pointer x for the
 first vector, the specified input FIFO pointer y for the second vector, and the
 specified output FIFO pointer.
 *****************************************************************************/
-objtr_hist_gen_context_type *objtr_hist_gen_new(
+lide_c_objtr_hist_gen_context_type *lide_c_objtr_hist_gen_new(
         lide_c_fifo_pointer input, int *bins, int NUM_BINS, int width,
         int height, lide_c_fifo_pointer out);
 
 /*****************************************************************************
-Enable function of the objtr_hist_gen actor.
+Enable function of the lide_c_objtr_hist_gen actor.
 *****************************************************************************/
-boolean objtr_hist_gen_enable(objtr_hist_gen_context_type *context);
+boolean lide_c_objtr_hist_gen_enable(lide_c_objtr_hist_gen_context_type *context);
 
 /*****************************************************************************
-Invoke function of the objtr_hist_gen actor.
+Invoke function of the lide_c_objtr_hist_gen actor.
 *****************************************************************************/
-void objtr_hist_gen_invoke(objtr_hist_gen_context_type *context);
+void lide_c_objtr_hist_gen_invoke(lide_c_objtr_hist_gen_context_type *context);
 
 /*****************************************************************************
-Terminate function of the objtr_hist_gen actor.
+Terminate function of the lide_c_objtr_hist_gen actor.
 *****************************************************************************/
-void objtr_hist_gen_terminate(objtr_hist_gen_context_type *context);
+void lide_c_objtr_hist_gen_terminate(lide_c_objtr_hist_gen_context_type *context);
 
 #endif
