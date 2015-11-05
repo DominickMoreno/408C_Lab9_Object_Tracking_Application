@@ -64,10 +64,10 @@ configuration of vector length, the specified input FIFO pointer x for the
 first vector, the specified input FIFO pointer y for the second vector, and the
 specified output FIFO pointer.
 *****************************************************************************/
-lide_c_objtr_hist_dist_map_context_type *lide_c_objtr_hist_dist_map_new(
-        lide_c_fifo_pointer input, int *bins, int NUM_BINS, int width,
-        int height, lide_c_fifo_pointer out);
 
+lide_c_objtr_hist_dist_map_context_type *lide_c_objtr_hist_dist_map_new(
+        lide_c_fifo_pointer ref, lide_c_fifo_pointer hist, int *histogram,
+		int *bins, int bin_count, int W, int H, int Tw, int Th, lide_c_fifo_pointer out); 
 /*****************************************************************************
 Enable function of the lide_c_objtr_hist_dist_map actor.
 *****************************************************************************/
