@@ -25,37 +25,12 @@ ENHANCEMENTS, OR MODIFICATIONS.
 #include <stdlib.h>
 
 #include "lide_c_fifo.h"
-/* Kim's library */
-/*
-#include "lide_c_objtr_hist_gen.h"
-*/
 #include "hist_find_opt.h"
 #include "lide_c_util.h"
 
 /*******************************************************************************
 INNER PRODUCT STRUCTURE DEFINITION
 *******************************************************************************/
-
-/* Kim's context obj */
-/*
-struct _lide_c_objtr_hist_gen_context_struct { 
-#include "lide_c_actor_context_type_common.h"
-
-    //Histogram variables
-    int num_bins;
-    int *bins;
-    int width; 
-    int height;
-    int *image;
-     
-
-    //Input ports.
-    lide_c_fifo_pointer input;
-
-    //Output port.
-    lide_c_fifo_pointer out;
-};
-*/
 
 struct _lide_c_hist_find_opt_context_struct { 
 #include "lide_c_actor_context_type_common.h"
