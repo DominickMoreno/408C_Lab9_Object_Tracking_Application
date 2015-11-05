@@ -61,13 +61,14 @@ struct _lide_c_hist_find_opt_context_struct {
 #include "lide_c_actor_context_type_common.h"
 
     /* Histogram variables. */
-     int block_size;
+    int block_size;
+	int output_index;
 
     /* Input port. */
     lide_c_fifo_pointer input;
 
     /* Output port. */
-    lide_c_fifo_pointer out;
+    lide_c_fifo_pointer output;
 };
 /*******************************************************************************
 IMPLEMENTATIONS OF INTERFACE FUNCTIONS.
@@ -80,20 +81,77 @@ presentation slides.
 lide_c_hist_find_opt_context_type *lide_c_hist_find_opt_new(
         lide_c_fifo_pointer input, 
         int block_size,
-        lide_c_fifo_pointer out) { 
+        lide_c_fifo_pointer output) { 
+	lide_c_hist_find_opt_context_type *context = NULL;
 	printf("in hist_find_opt_NEW!\n");
-    return NULL;
+
+	/* allocate memory */
+	context = lide_c_util_malloc(sizeof(lide_c_hist_find_opt_context_type));
+	context->mode = lide_c_hist_find_opt_MODE_PROCESS;
+
+	/* assign enable/invoke */
+	context->enable = (lide_c_actor_enable_function_type)
+		lide_c_hist_find_opt_enable;
+	context->invoke = (lide_c_actor_invoke_function_type)
+		lide_c_hist_find_opt_invoke;
+
+	/* bind input/output FIFOs to context */
+	context->input = input;
+	context->output = output;
+
+	/* assign actor specific context data */
+	context->block_size = block_size;
+	context->output_index = -1;
+
+    return context;
 }
 
 boolean lide_c_hist_find_opt_enable(
         lide_c_hist_find_opt_context_type *context) {
 
+	boolean result = 0;
+
 	printf("in hist_find_opt_ENABLE!\n");
-	return 0;
+	if(context->mode == lide_c_hist_find_opt_MODE_PROCESS) {
+
+		int num_tokens = lide_c_fifo_population(context->input);
+		result = (num_tokens >= context->block_size);
+
+	} 
+
+	return result;
 }
 
-void lide_c_hist_find_opt_invoke(lide_c_hist_find_opt_context_type *context) {
+void lide_c_hist_find_opt_invoke(
+		lide_c_hist_find_opt_context_type*context) {
     printf("in hist_find_opt_INVOKE!\n");
+
+	if(context->mode == lide_c_hist_find_opt_MODE_PROCESS) {
+		int index, least_val, least_index;
+		int *array_of_vals;
+
+		/* read the input FIFO */
+		for(index = 0; index < context->block_size; index++) {
+			lide_c_fifo_read(context->input, &array_of_vals[index]);
+		} 
+
+		/* determine the index of the smallest value */
+		least_val = 4294967295;
+		least_index = -1;
+		for(index = 0; index < context->block_size; index++) {
+			if(array_of_vals[index] < least_val) {
+				least_val = array_of_vals[index];
+				least_index = index;
+			}
+		}
+
+		context->output_index = least_index;
+
+		/* write the least value index to the output FIFO */
+		lide_c_fifo_write(context->output, &(context->output_index));
+
+	}
+
     return;
 }
 
@@ -101,5 +159,6 @@ void lide_c_hist_find_opt_terminate(
         lide_c_hist_find_opt_context_type *context) {
 
 	printf("in hist_find_opt_TERMINATE!\n");
+	free(context);
 	return;
 }
