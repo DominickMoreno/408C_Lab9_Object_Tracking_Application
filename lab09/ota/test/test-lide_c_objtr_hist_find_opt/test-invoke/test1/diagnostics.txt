@@ -1,0 +1,116 @@
+width: 4, height: 13
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+input_source visit complete.
+in invoke
+lide_c_objtr_hist_gen visit complete.
+input_source visit complete.
+in invoke
+0 is between 0 and 1, adding to bin.
+0 is between 0 and 1, adding to bin.
+0 is between 0 and 1, adding to bin.
+0 is between 0 and 1, adding to bin.
+1 is between 0 and 1, adding to bin.
+1 is between 0 and 1, adding to bin.
+1 is between 0 and 1, adding to bin.
+1 is between 0 and 1, adding to bin.
+2 is between 2 and 3, adding to bin.
+2 is between 2 and 3, adding to bin.
+2 is between 2 and 3, adding to bin.
+2 is between 2 and 3, adding to bin.
+3 is between 2 and 3, adding to bin.
+3 is between 2 and 3, adding to bin.
+3 is between 2 and 3, adding to bin.
+3 is between 2 and 3, adding to bin.
+4 is between 4 and 5, adding to bin.
+4 is between 4 and 5, adding to bin.
+4 is between 4 and 5, adding to bin.
+4 is between 4 and 5, adding to bin.
+5 is between 4 and 5, adding to bin.
+5 is between 4 and 5, adding to bin.
+5 is between 4 and 5, adding to bin.
+5 is between 4 and 5, adding to bin.
+6 is between 6 and 7, adding to bin.
+6 is between 6 and 7, adding to bin.
+6 is between 6 and 7, adding to bin.
+6 is between 6 and 7, adding to bin.
+7 is between 6 and 7, adding to bin.
+7 is between 6 and 7, adding to bin.
+7 is between 6 and 7, adding to bin.
+7 is between 6 and 7, adding to bin.
+8 is between 8 and 9, adding to bin.
+8 is between 8 and 9, adding to bin.
+8 is between 8 and 9, adding to bin.
+8 is between 8 and 9, adding to bin.
+9 is between 8 and 9, adding to bin.
+9 is between 8 and 9, adding to bin.
+9 is between 8 and 9, adding to bin.
+9 is between 8 and 9, adding to bin.
+10 is between 10 and 11, adding to bin.
+10 is between 10 and 11, adding to bin.
+10 is between 10 and 11, adding to bin.
+10 is between 10 and 11, adding to bin.
+11 is between 10 and 11, adding to bin.
+11 is between 10 and 11, adding to bin.
+11 is between 10 and 11, adding to bin.
+11 is between 10 and 11, adding to bin.
+Value 12 out of range.
+Value 12 out of range.
+Value 12 out of range.
+Value 12 out of range.
+lide_c_objtr_hist_gen visit complete.
+sink visit complete.
+sink visit complete.
+sink visit complete.
+sink visit complete.
+sink visit complete.
+sink visit complete.

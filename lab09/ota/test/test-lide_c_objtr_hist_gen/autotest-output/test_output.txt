@@ -1,5 +1,5 @@
 Tests started on:
-Thu Nov  5 15:38:00 EST 2015
+Thu Nov  5 16:22:13 EST 2015
 -----------------------------------------------------
 Test result for:
 /homes/kcarp13/enee408c_user/labs/lab09/ota/test/test-lide_c_objtr_hist_gen/test-enable/test1
@@ -31,4 +31,4 @@ Test result for:
 Error comparison result for: 
 /homes/kcarp13/enee408c_user/labs/lab09/ota/test/test-lide_c_objtr_hist_gen/test-invoke/test3
 Tests completed on:
-Thu Nov  5 15:38:03 EST 2015
+Thu Nov  5 16:22:28 EST 2015
