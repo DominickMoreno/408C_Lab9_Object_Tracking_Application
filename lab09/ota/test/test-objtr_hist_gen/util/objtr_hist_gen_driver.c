@@ -54,7 +54,7 @@ ENHANCEMENTS, OR MODIFICATIONS.
 int main(int argc, char **argv) {
     FILE *input_file = NULL; 
     FILE *out_file = NULL; 
-    objtr_hist_gen_context_type *actors[ACTOR_COUNT];
+    lide_c_actor_context_type *actors[ACTOR_COUNT];
     
     /* Connectivity: fifo1: (m, product), fifo2: (x, product); 
        fifo3: (y, product); fifo4: (product, out) 
@@ -64,16 +64,16 @@ int main(int argc, char **argv) {
     int token_size = 0;
     int bins[NUM_BINS * 2] = {0, 199, 200, 400};
     int i = 0;
-    int arg_count = 2;
-    int buffer_capacity = WIDTH * HEIGHT;
+    int arg_count = 3;
+    //int buffer_capacity = WIDTH * HEIGHT;
+    int buffer_capacity = 1024;
     
     /* actor descriptors (for diagnostic output) */
-    char *descriptors[ACTOR_COUNT] = {"input_source",  
-            "objtr_hist_gen", "sink"};
+    char *descriptors[ACTOR_COUNT] = {"input_source", "objtr_hist_gen", "sink"};
 
     /* Check program usage. */
     if (argc != arg_count) {
-        fprintf(stderr, "objtr_hist_gen_driver.exe error: arg count (argc = %d", argc);
+        fprintf(stderr, "objtr_hist_gen_driver.exe error: arg count (argc = %d)", argc);
         exit(1);
     }   
 
@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
             *)(lide_c_file_source_new(input_file, fifo1));
 
     actors[ACTOR_OBJTR_HIST_GEN] = (lide_c_actor_context_type
-            *)(objtr_hist_gen_new(fifo1, &bins, NUM_BINS, WIDTH, HEIGHT, fifo2));
+            *)(objtr_hist_gen_new(fifo1, bins, NUM_BINS, WIDTH, HEIGHT, fifo2));
 
     actors[ACTOR_SINK] = (lide_c_actor_context_type *)
             (lide_c_file_sink_new(out_file, fifo2));
