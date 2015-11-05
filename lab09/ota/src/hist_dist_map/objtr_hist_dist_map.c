@@ -86,8 +86,7 @@ lide_c_objtr_hist_dist_map_context_type *lide_c_objtr_hist_dist_map_new(
 
     context->ref = ref;
     context->hist = hist;
-	/*FIXME: Maybe malloc space for histgram?*/
-    context->histogram = histogram;
+    context->histogram = NULL;
     context->bins = bins;
     context->bin_count = bin_count;
     context->W = W;
@@ -101,16 +100,20 @@ lide_c_objtr_hist_dist_map_context_type *lide_c_objtr_hist_dist_map_new(
 
 boolean lide_c_objtr_hist_dist_map_enable(
         lide_c_objtr_hist_dist_map_context_type *context) {
+	int out_size;
     boolean result = FALSE;
+
     switch (context->mode) {
         case lide_c_objtr_hist_dist_map_MODE_1:
-            result = lide_c_fifo_population(context->hist) ==
-				context->bin_count;
+            result = (lide_c_fifo_population(context->hist) ==
+				context->bin_count);
             break;
         case lide_c_objtr_hist_dist_map_MODE_2:
-		/*FIXME: Not sure if output is correct*/ 
-            result = (lide_c_fifo_population(context->out) <
-                    lide_c_fifo_capacity(context->out));
+			out_size = (context->W - context->Tw + 1) * (context->H -
+				context->Th + 1);
+            result = (out_size < lide_c_fifo_capacity(context->out) -
+				lide_c_fifo_population(context->out)) &&
+				(lide_c_fifo_population(context->ref) => (context->W * context->H));
             break;
         default:
                 result = FALSE;
@@ -119,62 +122,109 @@ boolean lide_c_objtr_hist_dist_map_enable(
     return result;
 }
 
+static *compute_histogram(lide_c_objtr_hist_dist_map_context_type *context,
+						  int *ref_image,
+					      int *tile_hist)
+{
+	int upper_bound, lower_bound; 
+	for(i = 0; i < context->height; i++) {
+	/*Define token  out size*/
+		for(j = 0; j < context->width; j++) {
+			for(k = 0; k < 2*context->bin_count; k += 2) {
+			   
+				lower_bound = context->bins[k];
+				upper_bound = context->bins[k + 1];
+
+				if(((k == 0) && (ref_image[i*width + j] < lower_bound)) ||
+				   ((k == ((2*m)-2)) && (ref_image[i*width + j] > upper_bound))) {
+					printf("Value %d out of range.\n", ref_image[i + j]);
+					break;
+				}
+
+				if((ref_image[i*width + j] >= lower_bound) &&
+				   (ref_image[i*width + j] <= upper_bound)) {
+					printf("%d is between %d and %d, adding to bin.\n", ref_image[i*width + j], lower_bound, upper_bound);
+					tile_hist[(k/2)]++;
+					break;
+				}
+			}
+		}   
+	}
+}
+
+static int compute_dist(lide_c_objtr_hist_dist_map_context_type *context,
+				 int *tile_hist)
+{
+	int i, dist = 0;
+
+	for(i = 0; i < context->bin_count; i++)
+	{
+		dist += (context->histogram[i] + tile_hist[i]) * 
+                (context->histogram[i] + tile_hist[i]);
+	}
+ 	return dist;
+}
+
+
 void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *context) {
-    int i, j, k, upper_bound, lower_bound = 0;
-    int m = context->num_bins;
-    int width = context->width;
-    int height = context->height;
-    int num_pixels = width * height;
-    int *image;
+    int i, j, out_pos;
+	int out_size;
     int *out;
+	int *tile_hist;
+    int **ref_image;
+
     printf("in invoke\n");
     switch (context->mode) {
         case lide_c_objtr_hist_dist_map_MODE_1:
-			/* 
-            /* Disregard this token if it results in an invalid length. */
-             if ((context->width <= 0) || (context->height <= 0)) {
-                context->mode = lide_c_objtr_hist_dist_map_MODE_STORE_IMAGE;
-                 return;
-             } 
+			/*Take in histogram from hist_gen actor*/ 
+			context->histogram = malloc(sizeof(int)*bin_count);		
+            for (i = 0; i < bin_count; i++) {
+                lide_c_fifo_read(context->hist, &(context->histogram[i]));
+            }
+					
             context->mode = lide_c_objtr_hist_dist_map_MODE_2;
             break;
 
         case lide_c_objtr_hist_dist_map_MODE_2:
-            for (i = 0; i < num_pixels; i++) {
-                lide_c_fifo_read(context->input, &(context->image[i]));
-            }
+			/*Define token  out size*/
+			out_size = (context->W - context->Tw + 1) * (context->H -
+				context->Th + 1);
+            out = lide_c_util_malloc(sizeof(int) * out_size);
+			
+			/*Get reference image from source1*/
+			ref_image = malloc(sizeof(int) * context->H);
+			*ref_image = malloc(sizeof(int) * context->W);
+			for(i = 0; i < context->H; i++)
+			{
+				for(k = 0; k < context->W; k++)
+				{
+					lide_c_fifo_read(context->ref, &(ref_image[i][k]));
+				}
+			}
 
-            out = lide_c_util_malloc(sizeof(int) * context->num_bins);
-            image = context->image;
+			/*Find histogram for each tile of ref_image
+			  then compute the hist_dist and store in out*/
+			tile_hist = malloc(sizeof(int) * context->Tw * context->Th);	
+			for(i = 0; i < (context->H - context->Th + 1); i++)
+			{
+				for(k  = 0; k < (context->W - context->Tw + 1); k++)
+				{	
+					compute_histogram(context, i + ref_image[k], tile_hist);
+					out_pos++;
+					out[out_pos] = compute_hist_dist(context, tile_hist); 
+				}
+			}
+				
 
 
-            for(i = 0; i < context->height; i++) {
-                for(j = 0; j < context->width; j++) {
-                    for(k = 0; k < 2*m; k += 2) {
-                       
-                        lower_bound = context->bins[k];
-                        upper_bound = context->bins[k + 1];
-
-                        if(((k == 0) && (image[i*width + j] < lower_bound)) ||
-                           ((k == ((2*m)-2)) && (image[i*width + j] > upper_bound))) {
-                            printf("Value %d out of range.\n", image[i + j]);
-                            break;
-                        }
-
-                        if((image[i*width + j] >= lower_bound) &&
-                           (image[i*width + j] <= upper_bound)) {
-                            printf("%d is between %d and %d, adding to bin.\n", image[i*width + j], lower_bound, upper_bound);
-                            out[(k/2)]++;
-                            break;
-                        }
-                    }
-                }   
-            }
-
-            for (i = 0; i < m; i++) {
+            for (i = 0; i < out_size; i++) {
                 lide_c_fifo_write(context->out, &(out[i]));
             }
-            free(out);
+			free(tile_hist);
+			free(*ref_image);
+			free(ref_image);
+			free(out);	
+				
             context->mode = lide_c_objtr_hist_dist_map_MODE_1;
             break; 
         default:
@@ -186,6 +236,5 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 
 void lide_c_objtr_hist_dist_map_terminate(
         lide_c_objtr_hist_dist_map_context_type *context) {
-    free(context->image);
     free(context);
 }
