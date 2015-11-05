@@ -46,9 +46,9 @@ ENHANCEMENTS, OR MODIFICATIONS.
 /* The total number of actors in the application. */
 #define ACTOR_COUNT 3
 
-#define NUM_BINS 2
-#define WIDTH 2
-#define HEIGHT 2
+#define NUM_BINS 6
+#define WIDTH 4
+#define HEIGHT 13
 
 /* 
     Usage: lide_c_inner_prod_driver.exe m_file x_file y_file out_file
@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
     lide_c_fifo_pointer fifo1 = NULL, fifo2 = NULL;
 
     int token_size = 0;
-    int bins[NUM_BINS * 2] = {0, 199, 200, 400};
+    int bins[NUM_BINS * 2] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
     int i = 0;
     int arg_count = 3;
     //int buffer_capacity = WIDTH * HEIGHT;

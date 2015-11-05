@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 ################################################################################
-# @ddblock_begin copyright 
+# @ddblock_begin copyright
 #
-# Copyright (c) 1997-2015
+# Copyright (c) 1999-2014
 # Maryland DSPCAD Research Group, The University of Maryland at College Park 
 #
 # Permission is hereby granted, without written agreement and without
@@ -25,8 +25,18 @@
 # MARYLAND HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
 # ENHANCEMENTS, OR MODIFICATIONS.
 #
-# @ddblock_end copyright 
+# @ddblock_end copyright
 ################################################################################
 
-../../util/lide_c_objtr_hist_gen_driver.exe input.txt out.txt > diagnostics.txt
-cat out.txt
+# Script to configure this project
+
+dlcincludepath="-I. -I$DLXPROJSRC -I$UXLIDEC/src/gems/actors/basic \
+-I$UXLIDEC/src/gems/actors/common -I$UXLIDEC/src/gems/edges/basic \
+-I$UXLIDEC/src/tools/runtime"
+dlclibs="$DLXPROJSRC/lib_c_user_defined_actors.a \
+$LIDECGEN/lide_c_actors_basic.a $LIDECGEN/lide_c_edges_basic.a \
+$LIDECGEN/lide_c_runtime.a"
+dlctargetfile="lide_c_objtr_hist_gen_driver.exe"
+dlcinstalldir=""
+dlcobjs="lide_c_objtr_hist_gen_driver.o"
+dlcverbose=""

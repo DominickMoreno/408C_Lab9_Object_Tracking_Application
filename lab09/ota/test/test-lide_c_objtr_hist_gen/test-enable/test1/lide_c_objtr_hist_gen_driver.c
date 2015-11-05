@@ -68,6 +68,7 @@ int main(int argc, char **argv) {
     int bins[NUM_BINS * 2] = {0, 199, 200, 400};
     int i = 0;
     int arg_count = 3;
+    boolean enabled = 0;
     //int buffer_capacity = WIDTH * HEIGHT;
     int buffer_capacity = 1024;
     
@@ -99,19 +100,27 @@ int main(int argc, char **argv) {
     actors[ACTOR_lide_c_objtr_hist_gen] = (lide_c_actor_context_type
             *)(lide_c_objtr_hist_gen_new(fifo1, bins, NUM_BINS, WIDTH, HEIGHT, fifo2));
 
-    // actors[ACTOR_lide_c_objtr_hist_dist_map] = (lide_c_actor_context_type
-    //     *)(lide_c_objtr_hist_dist_map_new(fifo1, bins, NUM_BINS, WIDTH, HEIGHT, fifo2));
-
-    // actors[ACTOR_lide_c_objtr_hist_find_opt] = (lide_c_actor_context_type
-    //     *)(lide_c_objtr_hist_find_opt_new(fifo1, bins, NUM_BINS, WIDTH, HEIGHT, fifo2));
-
     actors[ACTOR_SINK] = (lide_c_actor_context_type *)
             (lide_c_file_sink_new(out_file, fifo2));
 
-    
+
+    /* Here, I'm testing the output of the enable function for the objtr_histgen. */
+    enabled = lide_c_objtr_hist_gen_enable((lide_c_objtr_hist_gen_context_type *)actors[ACTOR_lide_c_objtr_hist_gen]);
+    printf("objtr hist gen actor enable: %d\n", enabled);
+    enabled = 0;
+
+    lide_c_file_source_invoke((lide_c_file_source_context_type *)actors[ACTOR_INPUTSOURCE]);
+    lide_c_file_source_invoke((lide_c_file_source_context_type *)actors[ACTOR_INPUTSOURCE]);
+    lide_c_file_source_invoke((lide_c_file_source_context_type *)actors[ACTOR_INPUTSOURCE]);
+    lide_c_file_source_invoke((lide_c_file_source_context_type *)actors[ACTOR_INPUTSOURCE]);
+
+    printf("length: %d\n", lide_c_fifo_population(fifo1));
+    enabled = lide_c_objtr_hist_gen_enable((lide_c_objtr_hist_gen_context_type *)actors[ACTOR_lide_c_objtr_hist_gen]);
+    printf("objtr hist gen actor enable: %d\n", enabled);
+
 
     /* Execute the graph. */
-    lide_c_util_simple_scheduler(actors, ACTOR_COUNT, descriptors);
+    //lide_c_util_simple_scheduler(actors, ACTOR_COUNT, descriptors);
 
     /* Normal termination. */
     return 0;

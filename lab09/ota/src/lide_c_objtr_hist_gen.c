@@ -89,7 +89,7 @@ lide_c_objtr_hist_gen_context_type *lide_c_objtr_hist_gen_new(
     context->image = lide_c_util_malloc(
             sizeof(int) * width * height);
     context->out = out;
-
+    printf("width: %d, height: %d\n", width, height);
     return context;
 }
 
@@ -101,9 +101,10 @@ boolean lide_c_objtr_hist_gen_enable(
             result = lide_c_fifo_population(context->input) == ((context->width)*(context->height));
             break;
         case lide_c_objtr_hist_gen_MODE_PROCESS:
-
-            result = (lide_c_fifo_population(context->out) <
-                    lide_c_fifo_capacity(context->out));
+            printf("population: %d, capacity: %d\n", context->num_bins, 
+                    (lide_c_fifo_capacity(context->out) - lide_c_fifo_population(context->out)));
+            result = (context->num_bins <
+                    (lide_c_fifo_capacity(context->out) - lide_c_fifo_population(context->out)));
             break;
         default:
                 result = FALSE;
@@ -150,7 +151,7 @@ void lide_c_objtr_hist_gen_invoke(lide_c_objtr_hist_gen_context_type *context) {
 
                         if(((k == 0) && (image[i*width + j] < lower_bound)) ||
                            ((k == ((2*m)-2)) && (image[i*width + j] > upper_bound))) {
-                            printf("Value %d out of range.\n", image[i + j]);
+                            printf("Value %d out of range.\n", image[i*width + j]);
                             break;
                         }
 

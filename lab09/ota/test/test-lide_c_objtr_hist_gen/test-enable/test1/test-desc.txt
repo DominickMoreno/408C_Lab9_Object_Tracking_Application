@@ -1,0 +1,3 @@
+Test01
+
+This tests the hist gen when the actor does have enough data on the fifo to fire.

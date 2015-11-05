@@ -28,5 +28,7 @@
 # @ddblock_end copyright 
 ################################################################################
 
-../../util/lide_c_objtr_hist_gen_driver.exe input.txt out.txt > diagnostics.txt
-cat out.txt
+# Script to build this project
+
+set -a
+source dlcmakeme

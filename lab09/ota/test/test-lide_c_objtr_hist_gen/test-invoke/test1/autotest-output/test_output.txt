@@ -1,0 +1,10 @@
+Tests started on:
+Thu Nov  5 14:58:27 EST 2015
+-----------------------------------------------------
+Test result for:
+/homes/kcarp13/enee408c_user/labs/lab09/ota/test/test-lide_c_objtr_hist_gen/test-invoke/test1
+-----------------------------------------------------
+Error comparison result for: 
+/homes/kcarp13/enee408c_user/labs/lab09/ota/test/test-lide_c_objtr_hist_gen/test-invoke/test1
+Tests completed on:
+Thu Nov  5 14:58:27 EST 2015
