@@ -1,2 +1,2 @@
 !#usr/bin/env bash
-rm -f *.o *.d
+rm -f *.o *.d *.exe

@@ -1,0 +1,7 @@
+in hist_find_opt_NEW!
+block size: 9
+in hist_find_opt_ENABLE!
+objtr hist find_opt actor enable: 0
+length: 4
+in hist_find_opt_ENABLE!
+objtr hist find_opt actor enable: 0

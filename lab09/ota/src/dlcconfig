@@ -36,7 +36,11 @@ dlclibpath=""
 dlctargetfile="lib_c_user_defined_actors.a"
 dlclibs=""
 dlcinstalldir=""
+<<<<<<< HEAD:lab09/ota/src/dlcconfig
 dlcobjs="lide_c_objtr_hist_gen/lide_c_objtr_hist_gen.o
 hist_find_opt/lide_c_objtr_hist_find_opt.o
 hist_dist_map/objtr_hist_dist_map.o"
+=======
+dlcobjs="lide_c_objtr_hist_gen/lide_c_objtr_hist_gen.o hist_find_opt/lide_c_objtr_hist_find_opt.o"
+>>>>>>> 6f8cf1769d0452158444b10a7f7e3145ad9c8ee6:lab09/ota/src/dlcconfig
 dlcverbose=""

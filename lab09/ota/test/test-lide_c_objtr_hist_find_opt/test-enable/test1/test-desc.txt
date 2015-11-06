@@ -1,0 +1,3 @@
+Test01
+
+Tests that the actor will be enabled when the appropriate number of tokens are available on the fifo.
