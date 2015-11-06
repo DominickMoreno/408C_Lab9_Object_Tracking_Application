@@ -31,7 +31,7 @@ ENHANCEMENTS, OR MODIFICATIONS.
 #include "lide_c_fifo.h"
 #include "lide_c_file_source.h"
 #include "lide_c_file_sink.h"
-#include "lide_c_objtr_hist_find_opt.h"
+#include "hist_find_opt/lide_c_objtr_hist_find_opt.h"
 #include "lide_c_util.h"
 
 //#define BUFFER_CAPACITY 1024
@@ -89,7 +89,7 @@ int main(int argc, char **argv) {
     source1_file = lide_c_util_fopen(argv[i++], "r"); 
     // source2_file_file = lide_c_util_fopen(argv[i++], "r"); 
     out_file = lide_c_util_fopen(argv[i++], "w"); 
-	if(out == NULL)
+	if(out_file == NULL)
 		printf("hello");
 
     /* Create the buffers. */

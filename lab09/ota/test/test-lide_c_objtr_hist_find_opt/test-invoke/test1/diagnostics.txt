@@ -16,24 +16,10 @@ in hist_find_opt_ENABLE!
 input_source visit complete.
 in hist_find_opt_ENABLE!
 input_source visit complete.
-<<<<<<< HEAD
-input_source visit complete.
-=======
 in hist_find_opt_ENABLE!
 in hist_find_opt_INVOKE!
-comparing 32 to 2147483647
-comparing 4 to 32
-comparing 1 to 4
-comparing 5 to 1
-comparing 9 to 1
-comparing 4 to 1
-comparing 3 to 1
-comparing 0 to 1
-comparing 2 to 0
-least: 7
 lide_c_objtr_hist_find_opt visit complete.
 sink visit complete.
 input_source visit complete.
 in hist_find_opt_ENABLE!
 in hist_find_opt_ENABLE!
->>>>>>> 6f8cf1769d0452158444b10a7f7e3145ad9c8ee6

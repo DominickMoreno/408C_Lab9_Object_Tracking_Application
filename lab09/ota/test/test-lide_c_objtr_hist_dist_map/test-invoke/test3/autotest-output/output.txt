@@ -1,3 +1,27 @@
-objtr hist gen actor enable: 0
-length: 4
-objtr hist gen actor enable: 1
+
+
+==================== Simulation Start ====================
+hist visit complete.
+reflide_c_objtr_hist_dist_map visit complete.
+hist visit complete.
+reflide_c_objtr_hist_dist_map visit complete.
+hist visit complete.
+reflide_c_objtr_hist_dist_map visit complete.
+sink visit complete.
+hist visit complete.
+reflide_c_objtr_hist_dist_map visit complete.
+reflide_c_objtr_hist_dist_map visit complete.
+reflide_c_objtr_hist_dist_map visit complete.
+reflide_c_objtr_hist_dist_map visit complete.
+reflide_c_objtr_hist_dist_map visit complete.
+sink visit complete.
+(null) visit complete.
+reflide_c_objtr_hist_dist_map visit complete.
+(null) visit complete.
+(null) visit complete.
+
+====================== Simulation End ====================
+
+32
+32
+0

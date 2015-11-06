@@ -31,7 +31,7 @@ ENHANCEMENTS, OR MODIFICATIONS.
 #include "lide_c_fifo.h"
 #include "lide_c_file_source.h"
 #include "lide_c_file_sink.h"
-#include "objtr_hist_dist_map.h"
+#include "hist_dist_map/objtr_hist_dist_map.h"
 #include "lide_c_util.h"
 
 //#define BUFFER_CAPACITY 1024
