@@ -30,7 +30,7 @@
 
 # Script to configure this project
 
-dlcincludepath="-I. -I$DLXPROJSRC -I$UXLIDEC/src/gems/actors/basic \
+dlcincludepath="-I. -I$DLXPROJSRC/hist_find_opt/  -I$UXLIDEC/src/gems/actors/basic \
 -I$UXLIDEC/src/gems/actors/common -I$UXLIDEC/src/gems/edges/basic \
 -I$UXLIDEC/src/tools/runtime"
 dlclibs="$DLXPROJSRC/lib_c_user_defined_actors.a \

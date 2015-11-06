@@ -1,0 +1,7 @@
+objtr hist dist actor enable: 0
+length: 3
+objtr hist dist actor enable: 1
+objtr hist dist actor enable: 0
+length: 20
+objtr hist dist actor enable: 1
+objtr hist dist actor enable: 0

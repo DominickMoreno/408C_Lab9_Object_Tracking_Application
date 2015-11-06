@@ -1,0 +1,4 @@
+Tests the enable of hist_dist_map actor.
+After receiving sufficent tokens(2) actor should be enabled.
+Then when invoke is called the tokens are absorbed into context->histogram.
+Prints histogram to stdout

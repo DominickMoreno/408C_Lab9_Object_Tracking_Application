@@ -89,6 +89,8 @@ int main(int argc, char **argv) {
     source1_file = lide_c_util_fopen(argv[i++], "r"); 
     // source2_file_file = lide_c_util_fopen(argv[i++], "r"); 
     out_file = lide_c_util_fopen(argv[i++], "w"); 
+	if(out == NULL)
+		printf("hello");
 
     /* Create the buffers. */
     token_size = sizeof(int);

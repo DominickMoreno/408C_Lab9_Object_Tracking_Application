@@ -83,4 +83,8 @@ Terminate function of the lide_c_objtr_hist_dist_map actor.
 *****************************************************************************/
 void lide_c_objtr_hist_dist_map_terminate(lide_c_objtr_hist_dist_map_context_type *context);
 
+/*****************************************************************************
+Getter: histogram
+*****************************************************************************/
+int *histogram_context_get(lide_c_objtr_hist_dist_map_context_type *context);
 #endif

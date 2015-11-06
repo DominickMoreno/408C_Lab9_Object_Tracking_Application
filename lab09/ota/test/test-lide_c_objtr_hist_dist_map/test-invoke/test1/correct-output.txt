@@ -1,0 +1,5 @@
+objtr hist dist actor enable: 0
+length: 2
+objtr hist dist actor enable: 1
+Hist[0]: 90
+Hist[1]: 500

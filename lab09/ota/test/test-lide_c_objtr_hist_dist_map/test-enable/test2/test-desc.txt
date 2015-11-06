@@ -1,0 +1,3 @@
+Tests the enable of hist_dist_map actor.
+After receiving sufficent tokens(2) actor should be enabled.
+Then fire tokens and swithc back to mode 1 and be disabled.

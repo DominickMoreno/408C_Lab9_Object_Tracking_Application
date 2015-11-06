@@ -27,6 +27,7 @@ ENHANCEMENTS, OR MODIFICATIONS.
 #include "lide_c_fifo.h"
 #include "objtr_hist_dist_map.h"
 #include "lide_c_util.h"
+#include "hist2d.h"
 
 /*******************************************************************************
 INNER PRODUCT STRUCTURE DEFINITION
@@ -60,8 +61,8 @@ line breaks so that it can be cut and pasted more conveniently into
 presentation slides. 
 */
 lide_c_objtr_hist_dist_map_context_type *lide_c_objtr_hist_dist_map_new(
-        lide_c_fifo_pointer ref, 
         lide_c_fifo_pointer hist, 
+        lide_c_fifo_pointer ref, 
 		int *histogram,
 		int *bins,
 		int bin_count,
@@ -87,7 +88,7 @@ lide_c_objtr_hist_dist_map_context_type *lide_c_objtr_hist_dist_map_new(
 
     context->ref = ref;
     context->hist = hist;
-    context->histogram = NULL;
+    context->histogram = malloc(sizeof(int) * bin_count);
     context->bins = bins;
     context->bin_count = bin_count;
     context->W = W;
@@ -101,6 +102,7 @@ lide_c_objtr_hist_dist_map_context_type *lide_c_objtr_hist_dist_map_new(
 
 boolean lide_c_objtr_hist_dist_map_enable(
         lide_c_objtr_hist_dist_map_context_type *context) {
+
 	int out_size;
     boolean result = FALSE;
 
@@ -123,36 +125,7 @@ boolean lide_c_objtr_hist_dist_map_enable(
     return result;
 }
 
-static void compute_histogram(lide_c_objtr_hist_dist_map_context_type *context,
-						  int *ref_image,
-					      int *tile_hist)
-{
-	int i, j, k, upper_bound, lower_bound; 
-	int width = context->Tw;
-	for(i = 0; i < context->H; i++) {
-	/*Define token  out size*/
-		for(j = 0; j < context->W; j++) {
-			for(k = 0; k < 2*context->bin_count; k += 2) {
-			   
-				lower_bound = context->bins[k];
-				upper_bound = context->bins[k + 1];
 
-				if(((k == 0) && (ref_image[i*width + j] < lower_bound)) ||
-				   ((k == ((2*context->bin_count)-2)) && (ref_image[i*width + j] > upper_bound))) {
-					printf("Value %d out of range.\n", ref_image[i + j]);
-					break;
-				}
-
-				if((ref_image[i*width + j] >= lower_bound) &&
-				   (ref_image[i*width + j] <= upper_bound)) {
-					printf("%d is between %d and %d, adding to bin.\n", ref_image[i*width + j], lower_bound, upper_bound);
-					tile_hist[(k/2)]++;
-					break;
-				}
-			}
-		}   
-	}
-}
 
 static int compute_hist_dist(lide_c_objtr_hist_dist_map_context_type *context,
 				 int *tile_hist)
@@ -161,28 +134,27 @@ static int compute_hist_dist(lide_c_objtr_hist_dist_map_context_type *context,
 
 	for(i = 0; i < context->bin_count; i++)
 	{
-		dist += (context->histogram[i] + tile_hist[i]) * 
-                (context->histogram[i] + tile_hist[i]);
+		dist += ((context->histogram[i] - tile_hist[i]) * 
+                (context->histogram[i] - tile_hist[i]));
 	}
  	return dist;
 }
 
 
 void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *context) {
-    int i, k, out_pos;
+    int i, k, j,  stride, out_pos;
 	int out_size;
     int *out;
 	int *tile_hist;
     int **ref_image;
 
-    printf("in invoke\n");
     switch (context->mode) {
         case lide_c_objtr_hist_dist_map_MODE_1:
+
 			/*Take in histogram from hist_gen actor*/ 
-			context->histogram = malloc(sizeof(int)*
-				context->bin_count);		
             for (i = 0; i < context->bin_count; i++) {
-                lide_c_fifo_read(context->hist, &(context->histogram[i]));
+                lide_c_fifo_read(context->hist, &(context->
+					histogram[i]));
             }
 					
             context->mode = lide_c_objtr_hist_dist_map_MODE_2;
@@ -190,13 +162,20 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 
         case lide_c_objtr_hist_dist_map_MODE_2:
 			/*Define token  out size*/
+			out_pos = 0;
 			out_size = (context->W - context->Tw + 1) * (context->H -
 				context->Th + 1);
             out = lide_c_util_malloc(sizeof(int) * out_size);
 			
+			/*Allocate for ref_image*/
+			ref_image = lide_c_util_malloc(sizeof(int *) * context->H);
+			for(i = 0; i < context->H; i++)
+			{
+				ref_image[i] = lide_c_util_malloc(sizeof(int) * context->W);
+			}
+
+
 			/*Get reference image from source1*/
-			ref_image = malloc(sizeof(int) * context->H);
-			*ref_image = malloc(sizeof(int) * context->W);
 			for(i = 0; i < context->H; i++)
 			{
 				for(k = 0; k < context->W; k++)
@@ -204,17 +183,31 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 					lide_c_fifo_read(context->ref, &(ref_image[i][k]));
 				}
 			}
+	
+			/*Set stride*/
+			if(context->W - context->Tw == 0)
+				stride = 0;
+			else
+				stride = context->W - context->Tw + 1;
 
 			/*Find histogram for each tile of ref_image
 			  then compute the hist_dist and store in out*/
-			tile_hist = malloc(sizeof(int) * context->Tw * context->Th);	
+			tile_hist = malloc(context->bin_count * sizeof(int));
 			for(i = 0; i < (context->H - context->Th + 1); i++)
 			{
 				for(k  = 0; k < (context->W - context->Tw + 1); k++)
 				{	
-					compute_histogram(context, i + ref_image[k], tile_hist);
-					out_pos++;
+					/*Clear tile_hist*/
+					for(j = 0; j < context->bin_count; j++)
+						tile_hist[j] = 0;
+						
+					//compute_histogram(context, 
+					hist_2d(*(i + ref_image) + k, context->Tw, context->Th, 
+						stride , context->bins, 
+						context->bin_count, tile_hist);
+
 					out[out_pos] = compute_hist_dist(context, tile_hist); 
+					out_pos++;
 				}
 			}
 				
@@ -223,6 +216,7 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
             for (i = 0; i < out_size; i++) {
                 lide_c_fifo_write(context->out, &(out[i]));
             }
+
 			free(tile_hist);
 			free(*ref_image);
 			free(ref_image);
@@ -239,5 +233,11 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 
 void lide_c_objtr_hist_dist_map_terminate(
         lide_c_objtr_hist_dist_map_context_type *context) {
+	free(context->histogram);
     free(context);
+}
+
+int *histogram_context_get(lide_c_objtr_hist_dist_map_context_type *context)
+{
+	return context->histogram;
 }
