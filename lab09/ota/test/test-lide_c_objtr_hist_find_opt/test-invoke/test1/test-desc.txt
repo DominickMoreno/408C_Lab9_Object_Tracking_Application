@@ -1,3 +1,3 @@
-Test02
+Test01
 
-Tests the invoke function with a large tile and non-equal width and height.
+Tests the normal function of finding the minimum distance.
