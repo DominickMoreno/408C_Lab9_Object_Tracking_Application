@@ -38,5 +38,5 @@ dlctargetfile="lib_c_user_defined_actors.a"
 dlclibs=""
 dlcinstalldir=""
 #dlcobjs="objtr_hist_gen.o" #orig
-dlcobjs="hist_find_opt.o"
+dlcobjs="lide_c_objtr_hist_find_opt.o"
 dlcverbose=""

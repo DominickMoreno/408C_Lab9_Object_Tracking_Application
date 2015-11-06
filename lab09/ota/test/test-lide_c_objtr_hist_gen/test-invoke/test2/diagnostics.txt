@@ -54,6 +54,7 @@ input_source visit complete.
 in invoke
 lide_c_objtr_hist_gen visit complete.
 input_source visit complete.
+population: 6, capacity: 1024
 in invoke
 0 is between 0 and 1, adding to bin.
 0 is between 0 and 1, adding to bin.

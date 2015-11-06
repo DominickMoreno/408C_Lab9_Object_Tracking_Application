@@ -1,0 +1,11 @@
+Tests started on:
+Thu Nov  5 22:19:50 EST 2015
+-----------------------------------------------------
+Test result for:
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-enable/test1
+Files ../correct-output.txt and output.txt differ
+-----------------------------------------------------
+Error comparison result for: 
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-enable/test1
+Tests completed on:
+Thu Nov  5 22:19:51 EST 2015

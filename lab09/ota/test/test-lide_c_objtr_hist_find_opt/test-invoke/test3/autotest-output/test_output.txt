@@ -1,0 +1,10 @@
+Tests started on:
+Thu Nov  5 22:10:34 EST 2015
+-----------------------------------------------------
+Test result for:
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-invoke/test3
+-----------------------------------------------------
+Error comparison result for: 
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-invoke/test3
+Tests completed on:
+Thu Nov  5 22:10:35 EST 2015

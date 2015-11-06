@@ -1,0 +1,34 @@
+Tests started on:
+Thu Nov  5 22:20:09 EST 2015
+-----------------------------------------------------
+Test result for:
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-enable/test1
+-----------------------------------------------------
+Error comparison result for: 
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-enable/test1
+-----------------------------------------------------
+Test result for:
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-enable/test2
+-----------------------------------------------------
+Error comparison result for: 
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-enable/test2
+-----------------------------------------------------
+Test result for:
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-invoke/test1
+-----------------------------------------------------
+Error comparison result for: 
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-invoke/test1
+-----------------------------------------------------
+Test result for:
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-invoke/test2
+-----------------------------------------------------
+Error comparison result for: 
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-invoke/test2
+-----------------------------------------------------
+Test result for:
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-invoke/test3
+-----------------------------------------------------
+Error comparison result for: 
+/homes/kcarp13/enee408c_user/labs/lab09-git/408C_Lab9_Object_Tracking_Application/lab09/ota/test/test-lide_c_objtr_hist_find_opt/test-invoke/test3
+Tests completed on:
+Thu Nov  5 22:20:12 EST 2015

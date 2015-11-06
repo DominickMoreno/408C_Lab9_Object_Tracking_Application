@@ -1,3 +1,4 @@
+width: 2, height: 2
 objtr hist gen actor enable: 0
 length: 4
 objtr hist gen actor enable: 1
