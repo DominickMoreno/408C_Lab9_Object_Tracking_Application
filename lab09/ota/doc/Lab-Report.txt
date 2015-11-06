@@ -1,5 +1,6 @@
 Lab 9
-ENEE 408C - Fall 2015
+ENEE 408C
+Fall 2015
 
 Group Members:
 	Kim Carpentier
