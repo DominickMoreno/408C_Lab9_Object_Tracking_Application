@@ -1,0 +1,37 @@
+Lab 9
+ENEE 408C - Fall 2015
+
+Group Members:
+	Kim Carpentier
+	Jacob Knapo
+	Dominick Moreno
+
+Lab on GitHub:
+	https://github.com/DominickMoreno/408C_Lab9_Object_Tracking_Application
+
+	This lab was, much like many of the other labs in this class, difficult
+to start but once you understand the development environment it becomes
+easier to implement. The three of us struggled with the Lightweight
+Dataflow model at first, but managed to work through the inner product
+example enough to understand how to implement our vision tracking
+application. We decided to start using GitHub for this project even though
+it wasn't required in order to make the following projects easier.
+
+	In particular we divided the work as follows:
+
+ Jacob						 Kim						 Dominick
+*Implemented				*Implemented				*Implemented
+ hist_dist_map actor		 objtr_hist_gen actor		 hist_find_opt
+														 actor
+*Wrote tests for			*Wrote tests for
+ hist_dist_map actor		 objtr_hist_gen and			*Configuration
+							 hist_find_opt actors		 management
+
+	Once we became used to the Lightweight Dataflow model we felt fairly
+positive towards this method of implementing embedded systems. We found
+it very convenient that there were essentially no timing considerations
+we had to make, and that we were basically just passing primitives around
+between actors in their respective input/output FIFOs. This made
+implementing our respective actors simple. Furthermore this modularity
+allowed us all to work on our actors orthogonally, which made our
+introduction to Git (and merging) that much easier.
