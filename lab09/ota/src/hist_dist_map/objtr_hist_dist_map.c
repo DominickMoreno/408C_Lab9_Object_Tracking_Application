@@ -189,9 +189,7 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 			}
 	
 			/*Set stride*/
-			if(context->W - context->Tw == 0)
-				stride = 0;
-			else if((context->W - context->Tw) % 2 == 0)
+			if((context->W - context->Tw) % 2 == 0)
 				stride = context->W - context->Tw + 1;
 			else 
 				stride = context->W - context->Tw;

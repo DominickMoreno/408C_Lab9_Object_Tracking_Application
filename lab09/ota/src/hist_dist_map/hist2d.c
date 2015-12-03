@@ -17,7 +17,7 @@ void hist_2d(int *head,
 	if(tempOut == NULL)
 		exit(1);
 
-	printf("Tile:\t");
+	printf("Tile:\n");
 	/*Find the histogram for each row then add to the total histogram.*/
 	for(i=0; i < h; i++)
 	{
@@ -31,7 +31,7 @@ void hist_2d(int *head,
 			out[k] = out[k] + tempOut[k];
 			tempOut[k] = 0;
 		}
-		printf("\n\t");
+		printf("\n");
 	}			
 	free(tempOut);
 }
