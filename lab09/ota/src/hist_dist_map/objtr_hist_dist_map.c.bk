@@ -134,11 +134,9 @@ static int compute_hist_dist(lide_c_objtr_hist_dist_map_context_type *context,
 
 	for(i = 0; i < context->bin_count; i++)
 	{
-		/*
 		printf("Input"
 			"hist[%d]=%d\tTile_hist[%d]=%d\n",i,context->histogram[i],i,
 			tile_hist[i]);
-		*/
 		dist += ((context->histogram[i] - tile_hist[i]) * 
                 (context->histogram[i] - tile_hist[i]));
 	}
@@ -152,7 +150,7 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 	int out_size;
     int *out;
 	int *tile_hist;
-    int ref_image[context->H][context->W];
+    int **ref_image;
 
     switch (context->mode) {
         case lide_c_objtr_hist_dist_map_MODE_1:
@@ -173,13 +171,12 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 				context->Th + 1);
             out = lide_c_util_malloc(sizeof(int) * out_size);
 			
-			/*Allocate for ref_image
-			ref_image = (int *) malloc(sizeof(int *) * context->H);
+			/*Allocate for ref_image*/
+			ref_image = lide_c_util_malloc(sizeof(int *) * context->H);
 			for(i = 0; i < context->H; i++)
 			{
-				ref_image[i] = (int) malloc(sizeof(int) * context->W);
+				ref_image[i] = lide_c_util_malloc(sizeof(int) * context->W);
 			}
-			*/
 
 
 			/*Get reference image from source1*/
@@ -192,7 +189,6 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 			}
 
 			printf("Address space of ref_image:\n");
-
 			for(i = 0; i < context->H; i++)
 			{
 				for(k = 0; k < context->W; k++)
@@ -203,13 +199,13 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 			}
 
 	
-			/*Set stride
+			/*Set stride*/
 			if(context->W - context->Tw == 0)
 				stride = 0;
 			else if((context->W - context->Tw) % 2 == 0)
 				stride = context->W - context->Tw + 1;
-			else*/ 
-			stride = context->W - context->Tw;
+			else 
+				stride = context->W - context->Tw;
 
 			/*Find histogram for each tile of ref_image
 			  then compute the hist_dist and store in out*/
@@ -223,15 +219,14 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
 						tile_hist[j] = 0;
 						
 					//compute_histogram(context, 
-					hist_2d((*(i + ref_image) + k), context->Tw, context->Th, stride , context->bins,
+					hist_2d(*(i + ref_image) + k, context->Tw, context->Th, 
+						stride , context->bins, 
 						context->bin_count, tile_hist);
-
-					printf("\nHist = {");
-
+					printf("\n");
 					for(j=0;j<context->bin_count;j++)
-						printf("%d, ",j, tile_hist[j]);
-					
-					printf("}\n");
+						printf("hist[%d]=%d ",j, tile_hist[j]);
+
+					printf("\n");
 
 					out[out_pos] = compute_hist_dist(context, tile_hist); 
 					out_pos++;
@@ -245,6 +240,8 @@ void lide_c_objtr_hist_dist_map_invoke(lide_c_objtr_hist_dist_map_context_type *
             }
 
 			free(tile_hist);
+			free(*ref_image);
+			free(ref_image);
 			free(out);	
 				
             context->mode = lide_c_objtr_hist_dist_map_MODE_1;

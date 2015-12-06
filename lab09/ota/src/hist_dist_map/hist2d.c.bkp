@@ -12,8 +12,7 @@ void hist_2d(int *head,
 {
 	int i;
 	int *tempOut = calloc(m , sizeof(int));	
-	int k,j,l;
-
+	int k,j;
 
 	if(tempOut == NULL)
 		exit(1);
@@ -22,13 +21,11 @@ void hist_2d(int *head,
 	/*Find the histogram for each row then add to the total histogram.*/
 	for(i=0; i < h; i++)
 	{
-		for(l=0; l < w; l++)
-		{
-		
-			printf("%jx  ", (head + i*w + i*stride + l));
-		}
-		
-		hist(head + i * (w + stride) , w, bins, m, tempOut);	 
+		for(j=0;j<w;j++)
+			printf("%d  ",(head + i*stride*2)[j]);
+
+		hist(head + i * stride * 2, w, bins, m, tempOut);	 
+		/*Add histogram of current row to total histogram*/
 		for(k=0;k<m;k++)
 		{
 			out[k] = out[k] + tempOut[k];
